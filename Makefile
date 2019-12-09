@@ -14,6 +14,7 @@ install-sdl:
 	sudo apt-get install mercurial
 	hg clone "https://hg.libsdl.org/SDL" "SDL"
 	cd SDL
+	ls
 	mkdir build
 	cd build
 	../configure
