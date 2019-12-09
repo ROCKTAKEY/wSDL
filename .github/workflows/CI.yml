@@ -1,0 +1,19 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        cxx_standard:
+          - 'c++14'
+          - 'c++17'
+
+    steps:
+      env:
+        CXXSTD: ${{ matrix.cxx_standard }}
+
+      run: make
