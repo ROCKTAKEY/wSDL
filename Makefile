@@ -1,7 +1,7 @@
 CXX = g++
 CXXSTD := c++17
 CXXFLAG = -Wall -Wextra -O0 -g -std=${CXXSTD}
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf
+LIBS = -lSDL2main -lSDL2 -lSDL2_ttf
 TESTDIR = ./test
 
 test.exe: ${TESTDIR}/a.cpp wSDL.hpp
@@ -14,6 +14,7 @@ install-sdl:
 	sudo apt-get install mercurial
 	hg clone "https://hg.libsdl.org/SDL" "SDL"
 	cd SDL && mkdir build && cd build && ../configure && make && sudo make install
+	sudo apt get install libsdl2{-image,-ttf}-dev
 
 actions: install-sdl test.exe
 
