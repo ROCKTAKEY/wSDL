@@ -13,7 +13,7 @@ clean:
 install-sdl:
 	sudo apt-get install mercurial
 	hg clone "https://hg.libsdl.org/SDL" "SDL"
-	cd sdl
+	cd SDL
 	mkdir build
 	../.configure
 	make
