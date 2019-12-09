@@ -12,8 +12,8 @@ jobs:
           - 'c++14'
           - 'c++17'
 
-    steps:
-      env:
+    env:
         CXXSTD: ${{ matrix.cxx_standard }}
 
-      run: make
+    steps:
+      - run: make
