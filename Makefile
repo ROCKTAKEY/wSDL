@@ -15,7 +15,7 @@ install-sdl:
 	hg clone "https://hg.libsdl.org/SDL" "SDL"
 	cd SDL
 	mkdir build
-	../.configure
+	../configure
 	make
 	sudo make install
 
