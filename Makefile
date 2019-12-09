@@ -9,3 +9,16 @@ test.exe: ${TESTDIR}/a.cpp wSDL.hpp
 
 clean:
 	rm test.exe
+
+install-sdl:
+	sudo apt-get install mercurial
+	hg clone "https://hg.libsdl.org/SDL" "SDL"
+	cd sdl
+	mkdir build
+	../.configure
+	make
+	sudo make install
+
+actions: install-sdl test.exe
+
+.PHONY: clean actions
