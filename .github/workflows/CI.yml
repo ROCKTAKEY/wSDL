@@ -12,9 +12,9 @@ jobs:
           - 'c++14'
           - 'c++17'
 
+    env:
+      CXXSTD: ${{ matrix.cxx_standard }}
+
     steps:
       - uses: actions/checkout@v1
-      - name: make actions
-        env:
-          CXXSTD: ${{ matrix.cxx_standard }}
-        run: make actions
+      - run: make actions
