@@ -12,7 +12,9 @@ clean:
 
 install-sdl:
 	sudo apt update
-	sudo apt install libsdl2{,-image,-ttf}-dev
+	sudo apt install libsdl2-dev
+	sudo apt install libsdl2-ttf-dev
+	sudo apt install libsdl2-image-dev
 
 actions: install-sdl test.exe
 
