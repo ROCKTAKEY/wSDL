@@ -1,5 +1,4 @@
 CXX = g++
-CXXSTD := c++17
 CXXFLAG = -Wall -Wextra -O0 -g -std=${CXXSTD}
 LIBS = -lSDL2main -lSDL2 -lSDL2_ttf
 TESTDIR = ./test
