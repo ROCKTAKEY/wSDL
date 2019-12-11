@@ -10,14 +10,12 @@ test.exe: ${TESTDIR}/a.cpp wSDL.hpp
 clean:
 	rm test.exe
 
-before-install:
+install-sdl:
 	sudo apt update
-	sudo apt install mercurial
+	sudo apt install libsdl2-dev
+	sudo apt install libsdl2-ttf-dev
+	sudo apt install libsdl2-image-dev
 
-install-%:
-	hg clone https://hg.libsdl.org/% %
-	cd % && mkdir build && cd build && ../configure && make && sudo make install
+actions: install-sdl test.exe
 
-actions: install-SDL install-SDL_ttf install-SDL_image test.exe
-
-.PHONY: clean install-% actions
+.PHONY: clean actions
