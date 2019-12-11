@@ -13,9 +13,8 @@ jobs:
           - 'c++17'
 
     steps:
-      - name: Test
+      - uses: actions/checkout@v1
+      - name: make actions
         env:
           CXXSTD: ${{ matrix.cxx_standard }}
-
-      - uses: actions/checkout@v1
-      - run: make actions
+        run: make actions
