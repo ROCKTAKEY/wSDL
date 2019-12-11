@@ -11,6 +11,7 @@ clean:
 	rm test.exe
 
 install-sdl:
+	sudo apt update
 	sudo apt-get install mercurial
 	hg clone "https://hg.libsdl.org/SDL" "SDL"
 	cd SDL && mkdir build && cd build && ../configure && make && sudo make install
