@@ -13,7 +13,8 @@ jobs:
           - 'c++17'
 
     steps:
-      - env:
+      - name: Test
+        env:
           CXXSTD: ${{ matrix.cxx_standard }}
 
       - uses: actions/checkout@v1
