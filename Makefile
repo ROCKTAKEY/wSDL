@@ -12,10 +12,7 @@ clean:
 
 install-sdl:
 	sudo apt update
-	sudo apt-get install mercurial
-	hg clone "https://hg.libsdl.org/SDL" "SDL"
-	cd SDL && mkdir build && cd build && ../configure && make && sudo make install
-	sudo apt install libsdl2{-image,-ttf}-dev
+	sudo apt install libsdl2{,-image,-ttf}-dev
 
 actions: install-sdl test.exe
 
