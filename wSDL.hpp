@@ -56,17 +56,14 @@ namespace wsdl{
 
     private:
         int initializationCode;
-        bool clearing = false;
-        std::set<Window> windows;
+        std::set<Window *> windows;
 
     public:
         // Constructor/Destructor
         SDL(InitFlags flags)
             : initializationCode(SDL_Init(static_cast<Uint32>(flags))){}
         ~SDL(void){
-            clearing = true;
-            windows.clear();
-            clearing = false;
+            for (auto &w : windows) delete w;
             SDL_Quit();
         }
 
@@ -83,16 +80,14 @@ namespace wsdl{
         private:
             SDL_Window *window;
             SDL *sdl;
-            bool clearing = false;
-            std::set<Renderer> renderers;
+            std::set<Renderer *> renderers;
 
             Window(SDL_Window *window, SDL *sdl) : window(window), sdl(sdl){}
             Window(Window const &w) : window(w.window), sdl(w.sdl){}
             Window &operator=(Window const &w) = default;
-
+            Window(void) : window(nullptr){}
         public:
             // Constructor/Destructor/asignment operator
-            Window(void) : window(nullptr){}
             Window(Window &&w) = default;
             Window &operator=(Window &&w) {
                 this->window = w.window;
@@ -102,16 +97,12 @@ namespace wsdl{
             };
 
             ~Window(void){
-                clearing = true;
-                renderers.clear();
-                clearing = false;
+                for(auto &r : renderers) delete r;
 
                 if (window){
-                    if(!sdl->clearing){
-                        auto x = sdl->windows.find(*this);
-                        if (x != sdl->windows.end()) {
-                            sdl->windows.erase(x);
-                        }
+                    auto x = sdl->windows.find(this);
+                    if (x != sdl->windows.end()) {
+                        sdl->windows.erase(x);
                     }
                     SDL_DestroyWindow(window);
                 }
@@ -155,13 +146,11 @@ namespace wsdl{
 
                 ~Renderer(void){
                     if (renderer){
-                        if(!window->clearing){
-                            auto x = window->renderers.find(*this);
-                            if (x != window->renderers.end()) {
-                                window->renderers.erase(x);
-                            }
-                        }
-                        SDL_DestroyRenderer(renderer);
+                      auto x = window->renderers.find(this);
+                      if (x != window->renderers.end()) {
+                        window->renderers.erase(x);
+                      }
+                      SDL_DestroyRenderer(renderer);
                     }
                 }
 
@@ -178,29 +167,34 @@ namespace wsdl{
                 }
             };
 
-            Renderer const &createRenderer(RendererFlags flags, int index = -1){
-                return *renderers.insert(
-                    Renderer(
-                        SDL_CreateRenderer(
-                            window,
-                            index,
-                            static_cast<Uint32>(flags)
-                            ),
-                        this
-                        )).first;
+            std::shared_ptr<Renderer> const createRenderer(
+                RendererFlags flags, int index = -1
+                ){
+                return std::shared_ptr<Renderer> (
+                    *renderers.insert(
+                        new Renderer(
+                            SDL_CreateRenderer(
+                                window,
+                                index,
+                                static_cast<Uint32>(flags)
+                                ),
+                            this
+                            )).first);
             }
         };
 
-        Window const &createWindow(std::string title, int x, int y,
-                                   int width, int height,
-                                   WindowFlags flags){
+        std::shared_ptr<Window> const createWindow(
+            std::string title, int x, int y,
+            int width, int height,
+            WindowFlags flags){
             // Don't use emplace because this constructor is private.
-            return *windows.insert(
-                Window(SDL_CreateWindow(title.c_str(), x, y, width,
-                                        height,
-                                        static_cast<Uint32>(flags)),
-                       this)
-                ).first;
+            return std::shared_ptr<Window>(
+                *windows.insert(
+                    new Window(
+                        SDL_CreateWindow(title.c_str(), x, y, width, height,
+                                         static_cast<Uint32>(flags)),
+                        this)
+                    ).first);
         }
     };
 
