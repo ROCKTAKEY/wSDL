@@ -43,7 +43,10 @@ namespace wsdl{
     };
 
     enum class RendererFlags : Uint32{
-
+        software      = SDL_RENDERER_SOFTWARE,
+        accelerated   = SDL_RENDERER_ACCELERATED,
+        presentvsync  = SDL_RENDERER_PRESENTVSYNC,
+        targettexture = SDL_RENDERER_TARGETTEXTURE,
     };
 
     // main
