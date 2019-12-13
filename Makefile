@@ -1,10 +1,15 @@
 CXX = g++
+CXXSTD = c++17
 CXXFLAG = -Wall -Wextra -O0 -g -std=${CXXSTD}
 LIBS = -lSDL2main -lSDL2 -lSDL2_ttf
 TESTDIR = ./test
 
+ifeq (${OS},Windows_NT)
+MINGW = -lmingw32
+endif
+
 test.exe: ${TESTDIR}/a.cpp wSDL.hpp
-	${CXX} -I. ${CXXFLAG} $< -o $@ ${LIBS}
+	${CXX} -I. ${CXXFLAG} $< -o $@ ${MINGW} ${LIBS}
 
 clean:
 	rm test.exe
