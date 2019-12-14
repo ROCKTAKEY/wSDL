@@ -18,3 +18,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: make actions CXXSTD=${{ matrix.cxx_standard }} CXX=${{ matrix.cxx_compiler }}
+      - run: ./test.exe
