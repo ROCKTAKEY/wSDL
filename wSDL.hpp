@@ -216,18 +216,15 @@ namespace wsdl{
 
 template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator|(T l, T r){
-    return static_cast<T>(static_cast<Uint32>(l)
-                          | static_cast<Uint32>(r));
+    return static_cast<T>(static_cast<Uint32>(l) | static_cast<Uint32>(r));
 }
 template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator&(T l, T r){
-    return static_cast<T>(static_cast<Uint32>(l)
-                                        & static_cast<Uint32>(r));
+    return static_cast<T>(static_cast<Uint32>(l) & static_cast<Uint32>(r));
 }
 template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator^(T l, T r){
-    return static_cast<T>(static_cast<Uint32>(l)
-                                        ^ static_cast<Uint32>(r));
+    return static_cast<T>(static_cast<Uint32>(l) ^ static_cast<Uint32>(r));
 }
 template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator~(T i){
