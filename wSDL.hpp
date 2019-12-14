@@ -205,44 +205,43 @@ namespace wsdl{
     struct isSDLenum<InitFlags> : std::true_type{};
     template<>
     struct isSDLenum<WindowFlags> : std::true_type{};
+    template<>
+    struct isSDLenum<RendererFlags> : std::true_type{};
+
+    template<typename T>
+    using SDL_enum_t =
+        std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t>;
 
 }
 
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator|(T l, T r){
     return static_cast<T>(static_cast<Uint32>(l)
                           | static_cast<Uint32>(r));
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator&(T l, T r){
     return static_cast<T>(static_cast<Uint32>(l)
                                         & static_cast<Uint32>(r));
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator^(T l, T r){
     return static_cast<T>(static_cast<Uint32>(l)
                                         ^ static_cast<Uint32>(r));
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator~(T i){
     return static_cast<T>(~(static_cast<Uint32>(i)));
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator|=(T &l, T r){
     return l = l | r;
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator&=(T &l, T r){
     return l = l & r;
 }
-template<typename T,
-         std::enable_if_t<wsdl::isSDLenum<T>::value, std::nullptr_t> = nullptr>
+template<typename T, wsdl::SDL_enum_t<T> = nullptr>
 constexpr T operator^=(T &l, T r){
     return l = l ^ r;
 }
