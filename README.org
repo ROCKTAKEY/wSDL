@@ -1,0 +1,9 @@
+[[https://github.com/ROCKTAKEY/wSDL][https://img.shields.io/github/tag/ROCKTAKEY/wSDL.svg?style=flat-square]]
+[[file:LICENSE][https://img.shields.io/github/license/ROCKTAKEY/wSDL.svg?style=flat-square]]
+[[https://github.com/ROCKTAKEY/wSDL/actions][https://img.shields.io/github/workflow/status/ROCKTAKEY/wSDL/CI/master.svg?style=flat-square]]
+* wrapped SDL for C++
+
+* How to Use?
+
+* License
+  This package is licensed by Apache-2.0. See [[file:LICENSE][LICENSE]].
