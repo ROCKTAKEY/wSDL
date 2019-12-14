@@ -11,7 +11,10 @@ jobs:
         cxx_standard:
           - 'c++14'
           - 'c++17'
+        cxx_compiler:
+          - 'g++'
+          - 'clang++'
 
     steps:
       - uses: actions/checkout@v1
-      - run: make actions CXXSTD=${{ matrix.cxx_standard }}
+      - run: make actions CXXSTD=${{ matrix.cxx_standard }} CXX=${{ matrix.cxx_compiler }}
