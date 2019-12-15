@@ -63,7 +63,7 @@ namespace wsdl{
         SDL(InitFlags flags)
             : initializationCode(SDL_Init(static_cast<Uint32>(flags))){}
         ~SDL(void){
-            for (auto &w : windows) delete w;
+            while (!windows.empty()) delete *windows.begin();
             SDL_Quit();
         }
 
@@ -97,7 +97,7 @@ namespace wsdl{
             };
 
             ~Window(void){
-                for(auto &r : renderers) delete r;
+             while (!renderers.empty()) delete *renderers.begin();
 
                 if (window){
                     auto x = sdl->windows.find(this);
