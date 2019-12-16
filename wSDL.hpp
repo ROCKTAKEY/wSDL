@@ -67,6 +67,7 @@ namespace wsdl{
         Color(void) = default;
         Color(Color&) = default;
         Color(Color&&) = default;
+
         Color operator+(Color const &c) const {
             auto a = c.a + this->a * (max - c.a) / float(max);
             if (a == 0) return {0, 0, 0, 0};
