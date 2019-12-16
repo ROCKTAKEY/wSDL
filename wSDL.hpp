@@ -3,6 +3,8 @@
 #include <SDL2/SDL.h>
 #include <memory>
 #include <type_traits>
+#include <limits>
+#include <cmath>
 
 namespace wsdl{
     // header
@@ -48,6 +50,36 @@ namespace wsdl{
         presentvsync  = SDL_RENDERER_PRESENTVSYNC,
         targettexture = SDL_RENDERER_TARGETTEXTURE,
     };
+
+    struct Color{
+    private:
+        static constexpr auto max = std::numeric_limits<Uint8>::max();
+
+    public:
+        Uint8 r, g, b, a;
+        Uint8 &red = r, &green = g, &blue = b, &alpha = a;
+
+        operator SDL_Color(){
+            return SDL_Color({r, g, b, a});
+        }
+        Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a) : r(r), g(g), b(b), a(a){}
+        Color(SDL_Color c) : Color(c.r, c.g, c.b, c.a){}
+        Color(void) = default;
+        Color(Color&) = default;
+        Color(Color&&) = default;
+        Color operator+(Color const &c) const {
+            auto a = c.a + this->a * (max - c.a) / float(max);
+            if (a == 0) return {0, 0, 0, 0};
+            Color o;
+            o.a = a;
+            for(auto &&x : {&Color::r, &Color::g, &Color::b}){
+                o.*x = std::round((c.*x * c.a +
+                         this->*x * this->a * (max - c.a) / float(max)) / o.a);
+            }
+            return o;
+        }
+    };
+
 
     // main
     class SDL{
