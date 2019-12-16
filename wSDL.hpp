@@ -78,6 +78,16 @@ namespace wsdl{
             }
             return o;
         }
+
+        Color operator=(Color const &c){
+          for (auto &x : {&Color::r, &Color::g, &Color::b, &Color::a})
+            this->*x = c.*x;
+          return *this;
+        }
+
+        Color operator+=(Color const &c){
+            return *this = *this + c;
+        }
     };
 
 
