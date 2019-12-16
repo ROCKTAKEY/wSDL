@@ -197,6 +197,15 @@ namespace wsdl{
                 bool operator<(Renderer const &w) const {
                     return this->renderer < w.renderer;
                 }
+
+                void setDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+                    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+                }
+
+                void setDrawColor(Color c){
+                    setDrawColor(c.r, c.g, c.b, c.a);
+                }
+
             };
 
             std::shared_ptr<Renderer> const createRenderer(
